@@ -36,7 +36,7 @@ es = Elasticsearch(
 
 def tweets_geo(coordinates):
     filterByGeo = json.dumps({
-                    "from" : 0, "size" : 1000,
+                    "from" : 0, "size" : 500,
                     "query" : {
                         "bool" : {
                             "must" : {
@@ -44,7 +44,7 @@ def tweets_geo(coordinates):
                             },
                             "filter" : {
                                 "geo_distance" : {
-                                    "distance" : "100km",
+                                    "distance" : "500km",
                                     "coordinates" : coordinates
                                 }
                             }
@@ -64,7 +64,7 @@ def tweets_init():
 
 def tweets_key(keyword):
     filterByKeyword = json.dumps({
-                       "from" : 0, "size" : 1000,
+                       "from" : 0, "size" : 500,
                        "query": {
                            "match": {
                                'keyword': keyword
@@ -82,7 +82,7 @@ def tweets_key(keyword):
 
 def tweets_all(keyword, coordinates):
     filter = json.dumps({
-                       "from" : 0, "size" : 10,
+                       "from" : 0, "size" : 500,
                        "query": {
                            "bool" : {
                                "must" : {
@@ -92,7 +92,7 @@ def tweets_all(keyword, coordinates):
                                },
                                "filter" : {
                                    "geo_distance" : {
-                                       "distance" : "100km",
+                                       "distance" : "500km",
                                        "coordinates" : coordinates
                                    }
                                }
