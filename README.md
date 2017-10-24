@@ -1,6 +1,7 @@
 # TwittMap
 
-COMS 6998 Homework1. Web application collects Twitts and does some processing and represents the Twitts on GoogleMaps.
+COMS 6998 Homework1. 
+Web application collects Twitts and does some processing and represents the Twitts on GoogleMaps.
 
 
 ## Features
