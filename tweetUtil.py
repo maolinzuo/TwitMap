@@ -11,20 +11,20 @@ sys.setdefaultencoding('UTF8')
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-AWS_ACCESS_KEY=''
-AWS_SECRET_KEY=''
+AWS_ACCESS_KEY='AKIAIHKOJFQLFNUELHYA'
+AWS_SECRET_KEY='0ftuDmLYTyW6JB2Di6l4GcS9OE5otMcw4MhYhi8q'
 region = 'us-east-1' # e.g. us-east-1
 service = 'es'
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = ''
-ACCESS_SECRET = ''
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
+ACCESS_TOKEN = '919931702281211911-XwqLrxjYIDkwoEXfS1X2MLq1EwWlNS2'
+ACCESS_SECRET = 'HeYg2BlQRuP7OWXj2hdQYfaUwGQULmuOx452Ez90aBDiC'
+CONSUMER_KEY = 'bCi6ollQvp0JOAlGyqAGrPCt9'
+CONSUMER_SECRET = 'yHX6UV5ro4q9RsfEPHuMSMsVUje665kPLDcmNEG49aAnnhcWNs'
 
 awsauth = AWS4Auth(AWS_ACCESS_KEY, AWS_SECRET_KEY, region, service)
 
-host = '' # e.g. my-test-domain.us-east-1.es.amazonaws.com
+host = 'search-cc6998-ubxdzov3wvjqcmmp7qjc5oc3ny.us-east-1.es.amazonaws.com' # e.g. my-test-domain.us-east-1.es.amazonaws.com
 
 es = Elasticsearch(
     hosts=[{'host': host, 'port': 443}],
@@ -52,6 +52,15 @@ def tweets_geo(coordinates):
                     }
                 })
     return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterByGeo)['hits']['hits']))
+
+def tweets_init():
+    filterall = json.dumps({
+                       "from" : 0, "size" : 500,
+                       "query": {
+                            "match_all": {}
+                        }
+                   })
+    return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterall)['hits']['hits'][1:]))
 
 def tweets_key(keyword):
     filterByKeyword = json.dumps({
@@ -107,68 +116,6 @@ def getKey(text, keywords):
         if text.lower().find(keyword) >= 0:
             results.append(keyword)
     return random.choice(results) if results else Exception('no key found')
-
-class TweetStreamListener(tweepy.StreamListener):
-    def __init__(self, es):
-        self.es = es
-        self.rate = 0
-        self.other = 0
-
-    def on_data(self, data):
-            try:
-                tweet = json.loads(data)
-                # coordinates: [longitude, latitude]
-                document = {'text': tweet['text'],
-                            'author': tweet['user']['screen_name'],
-                            'keyword': getKey(tweet['text'], keySet),
-                            'timestamp': parser.parse(tweet['created_at']).strftime('%Y-%m-%dT%H:%M:%SZ'),
-                            'coordinates': tweet['place']['bounding_box']['coordinates'][0][0] } #  if 'place' in tweet and tweet['place'] else list(random.sample(positions, 1)[::-1])
-                # print document['coordinates']
-                es.index(index='twittmap', doc_type='tweet', body=document)
-                # print document
-            except Exception as e:
-                # print (e)
-                pass
-
-    def on_status(self, status):
-        print ("Status: " + status.text)
-
-    def on_error(self, status_code):
-        print ('Error:', str(status_code))
-        if status_code == 420:
-            print ("Rate Limited!")
-            sleepy = 60 * math.pow(2, self.rate)
-            print (time.strftime("%Y%m%d_%H%M%S"))
-            print ("A reconnection attempt will occur in " + \
-            str(sleepy/60) + " minutes.")
-            time.sleep(sleepy)
-            self.rate += 1
-        else:
-            sleepy = 5 * math.pow(2, self.other)
-            print (time.strftime("%Y%m%d_%H%M%S"))
-            print ("A reconnection attempt will occur in " + \
-            str(sleepy) + " seconds.")
-            time.sleep(sleepy)
-            self.other += 1
-        return False
-
-def tweetStreaming():
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-    api = tweepy.API(auth)
-
-    tweetStreamListener = TweetStreamListener(es)
-    while True:
-        try:
-            tweetStream = tweepy.Stream(auth=api.auth, listener=tweetStreamListener)
-            tweetStream.filter(track=keySet)
-        except KeyboardInterrupt:
-            # exit
-            tweetStream.disconnect()
-            break
-        except:
-            tweetStream.disconnect()
-            continue
 
 if __name__ == '__main__':
     # print tweets_key('job')
