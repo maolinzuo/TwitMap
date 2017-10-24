@@ -4,12 +4,12 @@ COMS 6998 Homework1. Web application collects Twitts and does some processing an
 
 
 ## Features
-1.Use Twitter Streaming API to fetch tweets from the twitter hose in real-time.
-2.Use AWS Elastic Search to store the tweets on the back-end.
-3.When opening the web, the web will display at most 500 markers in Google Map pulled from back-end. And user is able to choose a keyword from the dropdown and the corresponding tweets will present in the map.
-4.User is able to search for tweets in a 500km-radius circle by clicking on the map(the click point will be the center).
-5.While user is still connected to the server, if new tweet coming from Twitter Streaming API meets the requirements( keyword matching and posted in the selected area), new marker will show on the map.
-6.User is able to view the text, username and timestamp of the tweets by clicking the marker.
+1. Use Twitter Streaming API to fetch tweets from the twitter hose in real-time.
+2. Use AWS Elastic Search to store the tweets on the back-end.
+3. When opening the web, the web will display at most 500 markers in Google Map pulled from back-end. And user is able to choose a keyword from the dropdown and the corresponding tweets will present in the map.
+4. User is able to search for tweets in a 500km-radius circle by clicking on the map(the click point will be the center).
+5. While user is still connected to the server, if new tweet coming from Twitter Streaming API meets the requirements( keyword matching and posted in the selected area), new marker will show on the map.
+6. User is able to view the text, username and timestamp of the tweets by clicking the marker.
 
 ## Getting Started
 
