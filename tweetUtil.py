@@ -11,16 +11,16 @@ sys.setdefaultencoding('UTF8')
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-AWS_ACCESS_KEY='AKIAIHKOJFQLFNUELHYA'
-AWS_SECRET_KEY='0ftuDmLYTyW6JB2Di6l4GcS9OE5otMcw4MhYhi8q'
+AWS_ACCESS_KEY=''
+AWS_SECRET_KEY=''
 region = 'us-east-1' # e.g. us-east-1
 service = 'es'
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = '919931702281211911-XwqLrxjYIDkwoEXfS1X2MLq1EwWlNS2'
-ACCESS_SECRET = 'HeYg2BlQRuP7OWXj2hdQYfaUwGQULmuOx452Ez90aBDiC'
-CONSUMER_KEY = 'bCi6ollQvp0JOAlGyqAGrPCt9'
-CONSUMER_SECRET = 'yHX6UV5ro4q9RsfEPHuMSMsVUje665kPLDcmNEG49aAnnhcWNs'
+ACCESS_TOKEN = ''
+ACCESS_SECRET = ''
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
 
 awsauth = AWS4Auth(AWS_ACCESS_KEY, AWS_SECRET_KEY, region, service)
 
