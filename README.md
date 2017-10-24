@@ -23,23 +23,24 @@ python2.7 virtualenv
 recreate environment
 
 ```
-virtualenv ~/.flaskhw01
-source ~/.flaskhw01/bin/activate
-pip install -r requirements.txt
+$virtualenv ~/.flaskhw01
+$source ~/.flaskhw01/bin/activate
+$pip install -r requirements.txt
 ```
 
 run server
 ```
-python application.py
+fill aws & es credentials in tweetUtil.py
+$python application.py
 ```
 
 ## Deployment
 
 cd to the top level directory
 ```
-eb init -p python2.7 <application name>
-eb create <environment name>
-eb open
+$eb init -p python2.7 <application name>
+$eb create <environment name>
+$eb open
 ```
 
 ## Project structure
