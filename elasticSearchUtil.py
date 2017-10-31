@@ -51,7 +51,7 @@ def tweets_geo(coordinates):
                         }
                     }
                 })
-    return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterByGeo)['hits']['hits']))
+    return list(es.search(index="twittmap", doc_type='tweet', body=filterByGeo)['hits']['hits']["_source"])
 
 def tweets_init():
     filterall = json.dumps({
@@ -60,7 +60,7 @@ def tweets_init():
                             "match_all": {}
                         }
                    })
-    return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterall)['hits']['hits'][1:]))
+    return list(es.search(index="twittmap", doc_type='tweet', body=filterall)['hits']['hits'][1:]["_source"])
 
 def tweets_key(keyword):
     filterByKeyword = json.dumps({
@@ -78,7 +78,7 @@ def tweets_key(keyword):
                            }
                        ]
                    })
-    return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterByKeyword)['hits']['hits']))
+    return list(es.search(index="twittmap", doc_type='tweet', body=filterByKeyword)['hits']['hits']["_source"])
 
 def tweets_all(keyword, coordinates):
     filter = json.dumps({
@@ -106,7 +106,7 @@ def tweets_all(keyword, coordinates):
                            }
                        ]
                    })
-    return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filter)['hits']['hits']))
+    return list(es.search(index="twittmap", doc_type='tweet', body=filter)['hits']['hits']["_source"])
 
 keySet = ["google", "facebook", "amazon", "apple", "trump", "uber", "movie", "food", "music", "job"]
 
