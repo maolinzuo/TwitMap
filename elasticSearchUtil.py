@@ -16,13 +16,9 @@ AWS_SECRET_KEY=''
 region = 'us-east-1' # e.g. us-east-1
 service = 'es'
 
-# Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = ''
-ACCESS_SECRET = ''
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
 
 awsauth = AWS4Auth(AWS_ACCESS_KEY, AWS_SECRET_KEY, region, service)
+
 
 host = 'search-cc6998-ubxdzov3wvjqcmmp7qjc5oc3ny.us-east-1.es.amazonaws.com' # e.g. my-test-domain.us-east-1.es.amazonaws.com
 
