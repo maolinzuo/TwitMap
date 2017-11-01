@@ -8,6 +8,12 @@ flag = Event()
 application = Flask(__name__)
 socketio = SocketIO(application)
 
+# Variables that contains the user credentials to access Twitter API
+ACCESS_TOKEN = ''
+ACCESS_SECRET = ''
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+
 class TweetStreamListener(tweepy.StreamListener):
     def __init__(self, es):
         self.es = es
