@@ -30,6 +30,7 @@ es = Elasticsearch(
     connection_class=RequestsHttpConnection
 )
 
+# search tweets within 500km of the clicked point
 def tweets_geo(coordinates):
     filterByGeo = json.dumps({
                     "from" : 0, "size" : 500,
@@ -49,6 +50,7 @@ def tweets_geo(coordinates):
                 })
     return list(map(lambda x: x["_source"], es.search(index="twittmap", doc_type='tweet', body=filterByGeo)['hits']['hits']["_source"]))
 
+# 500 tweets without any requirment
 def tweets_init():
     filterall = json.dumps({
                        "from" : 0, "size" : 500,
@@ -58,6 +60,7 @@ def tweets_init():
                    })
     return list(map(lambda x: x["_source"],es.search(index="twittmap", doc_type='tweet', body=filterall)['hits']['hits'][1:]["_source"]))
 
+# search tweets according to keywords
 def tweets_key(keyword):
     filterByKeyword = json.dumps({
                        "from" : 0, "size" : 500,
@@ -76,6 +79,7 @@ def tweets_key(keyword):
                    })
     return list(map(lambda x: x["_source"],es.search(index="twittmap", doc_type='tweet', body=filterByKeyword)['hits']['hits']["_source"]))
 
+# search tweets according to both keywords and coordinates
 def tweets_all(keyword, coordinates):
     filter = json.dumps({
                        "from" : 0, "size" : 500,
