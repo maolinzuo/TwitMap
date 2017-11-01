@@ -112,7 +112,10 @@ def connect():
 
 @socketio.on('disconnect', namespace='/streaming')
 def disconnect():
-    flag.set()
+    #Set the internal flag to true. 
+    #All threads waiting for it to become true are awakened.
+    #Threads that call wait() once the flag is true will not block at all.
+    flag.set() 
     print ("Socket Disconnected!")
 
 if __name__ == '__main__':
