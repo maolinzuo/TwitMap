@@ -15,6 +15,13 @@ CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 
 class TweetStreamListener(tweepy.StreamListener):
+    def getKey(self, text, keywords):
+        results = []
+        for keyword in keywords:
+            if text.lower().find(keyword) >= 0:
+                results.append(keyword)
+        return random.choice(results) if results else Exception('no key found')
+
     def __init__(self, es):
         self.es = es
         self.rate = 0
@@ -27,7 +34,7 @@ class TweetStreamListener(tweepy.StreamListener):
                     # coordinates: [longitude, latitude]
                     document = {'text': tweet['text'],
                                 'author': tweet['user']['screen_name'],
-                                'keyword': getKey(tweet['text'], keySet),
+                                'keyword': self.getKey(tweet['text'], keySet),
                                 'timestamp': parser.parse(tweet['created_at']).strftime('%Y-%m-%dT%H:%M:%SZ'),
                                 'coordinates': tweet['place']['bounding_box']['coordinates'][0][0] } #  if 'place' in tweet and tweet['place'] else list(random.sample(positions, 1)[::-1])
                     socketio.emit('tweet', document, namespace='/streaming')
