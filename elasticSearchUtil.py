@@ -110,12 +110,6 @@ def tweets_all(keyword, coordinates):
 
 keySet = ["google", "facebook", "amazon", "apple", "trump", "uber", "movie", "food", "music", "job"]
 
-def getKey(text, keywords):
-    results = []
-    for keyword in keywords:
-        if text.lower().find(keyword) >= 0:
-            results.append(keyword)
-    return random.choice(results) if results else Exception('no key found')
 
 if __name__ == '__main__':
     # print tweets_key('job')
