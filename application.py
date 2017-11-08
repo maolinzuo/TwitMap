@@ -2,7 +2,7 @@ import json
 from threading import Thread, Event
 from flask import Flask, render_template, request
 from flask.ext.socketio import SocketIO, emit
-from tweetUtil import *
+from elasticSearchUtil import *
 
 flag = Event()
 application = Flask(__name__)
